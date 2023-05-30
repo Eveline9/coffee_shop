@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee shop</title>
+</head>
+<body>
+
+
+<span th:each="menuItem : ${menu}">
+     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
+</span>
+<br>
+
+<br>
+<h1>Корзина:</h1>
+<table border="1" width="100%" >
+    <tr >
+        <td>
+
+        </td>
+        <td>
+            Название</td>
+        <td>
+            Описание</td>
+        <td>
+            Цена
+        </td>
+        <td>
+            Кол-во
+        </td>
+        <td>
+
+        </td>
+    </tr>
+
+    <tr th:each="orderItem : ${orderItems}">
+        <td>
+            <a th:href="@{/item/{id}(id=${orderItem.item.id})}">
+                <img th:src="'/photos/'+${orderItem.item.id}+'.jpg'" width="80" height="90">
+            </a></td>
+        <td>
+            <span th:text="${orderItem.item.title}"/></td>
+        <td>
+            <span th:text="${orderItem.item.descr}"/></td>
+        <td>
+            Цена: <span th:text="${orderItem.item.cost}"/> руб.
+        </td>
+        <td>
+            Кол-во: <span th:text="${orderItem.quantity}"/>
+        </td>
+        <td>
+            <a th:href="@{/deleteCart/{id}(id=${orderItem.item.id})}" th:text="'удалить из корзины'"></a>
+        </td>
+    </tr>
+</table>
+<br>
+<form method="post" action="/makeOrder" >
+    Оформление заказа:<br><br>
+    Адрес доставки:
+    <input type="text" name="address"><input type="submit" value="Оформить заказ">
+</form>
+<form>
+
+    </form>
+
+
+</body>
+</html>

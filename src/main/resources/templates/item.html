@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${item.title}"></title>
+</head>
+<body>
+
+
+<span th:each="menuItem : ${menu}">
+     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
+</span>
+<br>
+
+
+<h1 th:text="${item.title} "/>
+<img th:src="'/photos/'+${item.id}+'.jpg'" width="80" height="90"/>
+
+<br>
+
+Описание: <span th:text="${item.descr}"/><br>
+Цена: <span th:text="${item.cost}"/> руб.<br>
+
+
+<span th:each="idForCart : ${cartItems}">
+    <a th:href="@{/addCart/{id}(id=${idForCart})}" th:text="'Добавить в корзину'"></a>
+</span>
+
+
+
+
+
+</body>
+</html>

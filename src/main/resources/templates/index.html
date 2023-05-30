@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee shop</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+
+<span th:each="menuItem : ${menu}">
+     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
+</span>
+<br>
+
+<h1>Товары:</h1>
+<form method="get">
+    Поиск (по названию):<input type="text" name="search_string" th:value="${search_string}"><input type="submit" value="Поиск">
+</form>
+<table border="1" width="100%" >
+
+    <tr >
+        <td>
+
+        </td>
+        <td>
+
+            <a th:href="'/?title_order='+${title_order}" >Название</a>
+        </td>
+
+        <td>
+            <a th:href="'/?cost_order='+${cost_order}" >Цена</a>
+        </td>
+    </tr>
+
+
+<tr th:each="item : ${items}">
+<td>
+    <a th:href="@{/item/{id}(id=${item.id})}">
+        <img th:src="'/photos/'+${item.id}+'.jpg'" width="80" height="90"/>
+
+    </a></td>
+    <td>
+        <a th:href="@{/item/{id}(id=${item.id})}">
+    <span th:text="${item.title}"/>
+        </a></td>
+
+    <td>
+    Цена: <span th:text="${item.cost}"/> руб.
+    </td>
+</tr>
+</table>
+
+</body>
+</html>

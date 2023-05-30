@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора - редактирование</title>
+</head>
+<body>
+
+
+
+<span th:each="menuItem : ${menu}">
+     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
+</span>
+<br>
+
+
+<h1 th:text="${item.title} "/>
+<form method="POST" enctype="multipart/form-data" >
+
+    <img th:src="'/photos/'+${item.id}+'.jpg'" width="80" height="90"/>
+    Новая фотография:<input type="file" name="file">
+    <br>
+    Название: <input type="text" name="title" th:value="${item.title}"/>
+<br>
+    Описание: <input type="text" name="descr" th:value="${item.descr}"/><br>
+    Цена: <input type="text" name="cost" th:value="${item.cost}"/> руб.<br>
+    <input type="submit">
+</form>
+</body>
+</html>

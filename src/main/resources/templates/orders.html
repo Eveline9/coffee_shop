@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee shop</title>
+</head>
+<body>
+
+
+
+<span th:each="menuItem : ${menu}">
+     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
+</span>
+<br>
+
+
+
+<br>
+<h1>История заказов</h1>
+<table border="1" width="100%" >
+    <tr >
+        <td>
+
+        </td>
+        <td>
+            Адрес доставки</td>
+        <td>
+            Кол-во позиций</td>
+        <td>
+            Стоимость
+        </td>
+        <td>
+
+        </td>
+    </tr>
+
+    <tr th:each="orderItem : ${orders}">
+        <td>
+            <span th:text="${orderItem.id}"/></td>
+
+        <td>
+            <span th:text="${orderItem.address}"/></td>
+        <td>
+            <span th:text="${orderItem.itemCount}"/></td>
+        <td>
+            <span th:text="${orderItem.sum}"/> руб.
+        </td>
+        <td>
+
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>
