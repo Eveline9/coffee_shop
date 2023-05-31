@@ -1,69 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Coffee shop</title>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/default">
 <body>
+<div layout:fragment="content">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row">
+            <h1 th:if="${orderItems.size() < 1}" class="text-muted">Вы ничего не положили в корзину!</h1>
+            <div class="col-lg-7" th:unless="${orderItems.size() < 1}">
+                <div class="card mb-3" th:each="orderItem : ${orderItems}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                                <div>
+                                    <img
+                                            th:src="'/photos/'+${orderItem.item.id}+'.jpg'"
+                                            class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                </div>
+                                <div class="ms-3">
+                                    <h5 th:text="${orderItem.item.title}"></h5>
+                                    <p class="small mb-0" ${orderItem.item.descr}></p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                                <div style="width: 50px;">
+                                    <h5 class="fw-normal mb-0" th:text="${orderItem.quantity}"></h5>
+                                </div>
+                                <div style="width: 80px;">
+                                    <h5 class="mb-0" th:text="${orderItem.item.cost} + ' &#8381;'"></h5>
+                                </div>
+                                <a
+                                        th:href="@{/deleteCart/{id}(id=${orderItem.item.id})}"
+                                   style="color: #cecece;"
+                                >
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-<span th:each="menuItem : ${menu}">
-     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
-</span>
+            <form method="post" action="/makeOrder"
+                  th:unless="${orderItems.size() < 1}"
+                  class="col-lg-5 text-bg-light rounded p-4"
+            >
+                <legend class="h4 text-muted mb-5">
+                    Оформление заказа
+                </legend>
+                <input type="text" name="address" class="form-control mb-5" placeholder="Ваш адрес">
+                <button type="submit" class="btn btn-dark w-100">Оформить заказ</button>
+            </form>
+        </div>
+    </div>
 <br>
 
-<br>
-<h1>Корзина:</h1>
-<table border="1" width="100%" >
-    <tr >
-        <td>
-
-        </td>
-        <td>
-            Название</td>
-        <td>
-            Описание</td>
-        <td>
-            Цена
-        </td>
-        <td>
-            Кол-во
-        </td>
-        <td>
-
-        </td>
-    </tr>
-
-    <tr th:each="orderItem : ${orderItems}">
-        <td>
-            <a th:href="@{/item/{id}(id=${orderItem.item.id})}">
-                <img th:src="'/photos/'+${orderItem.item.id}+'.jpg'" width="80" height="90">
-            </a></td>
-        <td>
-            <span th:text="${orderItem.item.title}"/></td>
-        <td>
-            <span th:text="${orderItem.item.descr}"/></td>
-        <td>
-            Цена: <span th:text="${orderItem.item.cost}"/> руб.
-        </td>
-        <td>
-            Кол-во: <span th:text="${orderItem.quantity}"/>
-        </td>
-        <td>
-            <a th:href="@{/deleteCart/{id}(id=${orderItem.item.id})}" th:text="'удалить из корзины'"></a>
-        </td>
-    </tr>
-</table>
-<br>
-<form method="post" action="/makeOrder" >
-    Оформление заказа:<br><br>
-    Адрес доставки:
-    <input type="text" name="address"><input type="submit" value="Оформить заказ">
-</form>
-<form>
-
-    </form>
-
-
+</div>
 </body>
 </html>

@@ -1,56 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Coffee shop</title>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/default">
 <body>
+<div layout:fragment="content">
+<div  class="container px-4 px-lg-5 mt-5">
+    <h1 class="mb-5">История заказов</h1>
+    <h3 th:if="${orders.size < 1}" class="text-muted">К сожалению, вы ещё не пробовали наш кофе!</h3>
+    <table class="table" th:unless="${orders.size() < 1}">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Адрес доставки</th>
+                <th scope="col">Кол-во позиций</th>
+                <th scope="col">Итоговая сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="orderItem : ${orders}">
+                <th scope="row" th:text="${orderItem.id}"></th>
+                <td th:text="${orderItem.address}">Mark</td>
+                <td th:text="${orderItem.itemCount}">Otto</td>
+                <td th:text="${orderItem.sum}">@mdo</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--<table border="1" width="100%" >-->
+<!--    <tr >-->
+<!--        <td>-->
 
+<!--        </td>-->
+<!--        <td>-->
+<!--            Адрес доставки</td>-->
+<!--        <td>-->
+<!--            Кол-во позиций</td>-->
+<!--        <td>-->
+<!--            Стоимость-->
+<!--        </td>-->
+<!--        <td>-->
 
+<!--        </td>-->
+<!--    </tr>-->
 
-<span th:each="menuItem : ${menu}">
-     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
-</span>
-<br>
+<!--    <tr th:each="orderItem : ${orders}">-->
+<!--        <td>-->
+<!--            <span th:text="${orderItem.id}"/>-->
+<!--        </td>-->
 
+<!--        <td>-->
+<!--            <span th:text="${orderItem.address}"/>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <span th:text="${orderItem.itemCount}"/>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <span th:text="${orderItem.sum}"/> руб.-->
+<!--        </td>-->
+<!--        <td>-->
 
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
 
-<br>
-<h1>История заказов</h1>
-<table border="1" width="100%" >
-    <tr >
-        <td>
-
-        </td>
-        <td>
-            Адрес доставки</td>
-        <td>
-            Кол-во позиций</td>
-        <td>
-            Стоимость
-        </td>
-        <td>
-
-        </td>
-    </tr>
-
-    <tr th:each="orderItem : ${orders}">
-        <td>
-            <span th:text="${orderItem.id}"/></td>
-
-        <td>
-            <span th:text="${orderItem.address}"/></td>
-        <td>
-            <span th:text="${orderItem.itemCount}"/></td>
-        <td>
-            <span th:text="${orderItem.sum}"/> руб.
-        </td>
-        <td>
-
-        </td>
-    </tr>
-</table>
-
-
+</div>
 </body>
 </html>

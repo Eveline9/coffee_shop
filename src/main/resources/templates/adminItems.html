@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Панель администрирования - товары</title>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/admin">
 <body>
 
-
-<span th:each="menuItem : ${menu}">
-     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
-</span>
-<br>
-
-
-<h1>Товары:</h1>
-<table th:each="item : ${items}" >
-    <tr>
-        <td>
-            <a th:href="@{/admin/delete/{id}(id=${item.id})}" th:text="удалить"></a>
-        </td>
-        <td>
-            <a th:href="@{/admin/edit/{id}(id=${item.id})}" th:text="редактировать"></a>
-        </td>
-        <td>
-            <a th:href="@{/item/{id}(id=${item.id})}" th:text="просмотр"></a>
-        </td>
-        <td th:text="${item.id}"/>
-        <td th:text="${item.title}"/>
-        <td th:text="${item.descr}"/>
-        <td th:text="${item.cost}"/>
-    </tr>
-</table>
-
-
+<div layout:fragment="dashboard">
+    <div  class="container px-4 px-lg-5 mt-5">
+        <h1 class="mb-5">Товары</h1>
+        <table class="table" >
+            <tbody>
+            <tr th:each="item : ${items}">
+                <th scope="row" th:text="${item.id}"></th>
+                <td th:text="${item.title}"></td>
+                <td th:text="${item.descr}"></td>
+                <td th:text="${item.cost}"></td>
+                <td>
+                    <a th:href="@{/admin/delete/{id}(id=${item.id})}" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                    <a th:href="@{/admin/edit/{id}(id=${item.id})}" class="btn btn-dark">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <a th:href="@{/item/{id}(id=${item.id})}" class="btn btn-primary">
+                        <span class="bi bi-eye-fill"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

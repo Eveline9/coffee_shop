@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/admin">
+<body>
+
+<div layout:fragment="dashboard">
+    <div  class="container px-4 px-lg-5 mt-5">
+        <div class="row justify-content-center">
+<form action="/admin/dologin" method="POST" class="col-lg-4 col-12">
+    <fieldset>
+        <legend class="text-center mb-5 fw-bold h1">
+            Авторизация
+        </legend>
+        <div class="mb-3">
+            <!--        <label for="login" class="form-label">Логин</label>-->
+            <input type="text" name="login" id="login" class="form-control" placeholder="Логин">
+        </div>
+        <div class="mb-3">
+            <!--        <label for="pwd" class="form-label">Пароль</label>-->
+            <input type="password" name="password" id="pwd" class="form-control" placeholder="Пароль">
+        </div>
+        <button type="submit" class="btn btn-dark w-100">Войти</button>
+    </fieldset>
+    <div class="mt-3">
+        <i>Подсказка: для авторизации как администратор используйте логин admin пароль 123
+            как пользователь логин user пароль 123</i>
+    </div>
+</form></div>
+    </div>
+</div>
+</body>
+</html>

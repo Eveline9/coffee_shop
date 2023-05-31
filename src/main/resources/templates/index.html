@@ -1,55 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Coffee shop</title>
-    <link rel="stylesheet" href="/css/style.css"/>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/default">
 <body>
 
+<div layout:fragment="content">
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white mb-3">
+            <h1 class="display-4 fw-bolder">Eveline CoffeeShop</h1>
+            <p class="lead fw-normal text-white-50">Начни день с кофе!</p>
 
-<span th:each="menuItem : ${menu}">
-     <a th:href="${menuItem.href}" th:text="${menuItem.title}"/>
-</span>
-<br>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <form method="get" class="input-group">
+                    <input type="text" placeholder="Ваш любимый кофе?" class="form-control" name="search_string" th:value="${search_string}">
+                    <button type="submit" class="btn btn-dark">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row">
+            <div class="col-lg-3 mb-5 ms-auto">
 
-<h1>Товары:</h1>
-<form method="get">
-    Поиск (по названию):<input type="text" name="search_string" th:value="${search_string}"><input type="submit" value="Поиск">
-</form>
-<table border="1" width="100%" >
-
-    <tr >
-        <td>
-
-        </td>
-        <td>
-
-            <a th:href="'/?title_order='+${title_order}" >Название</a>
-        </td>
-
-        <td>
-            <a th:href="'/?cost_order='+${cost_order}" >Цена</a>
-        </td>
-    </tr>
-
-
-<tr th:each="item : ${items}">
-<td>
-    <a th:href="@{/item/{id}(id=${item.id})}">
-        <img th:src="'/photos/'+${item.id}+'.jpg'" width="80" height="90"/>
-
-    </a></td>
-    <td>
-        <a th:href="@{/item/{id}(id=${item.id})}">
-    <span th:text="${item.title}"/>
-        </a></td>
-
-    <td>
-    Цена: <span th:text="${item.cost}"/> руб.
-    </td>
-</tr>
-</table>
-
+                <select class="form-select" aria-label="Default select example" id="sort">
+                    <option disabled selected>Отсортировать</option>
+                    <option value="0">
+                        Название
+                    </option>
+                    <option value="1">
+                        Цена
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="d-none">
+            <a data-sort-link th:href="'?title_order='+${title_order}">Название</a>
+            <a data-sort-link th:href="'?cost_order='+${cost_order}">Цена</a>
+        </div>
+        <script>
+            const select = document.querySelector("#sort")
+            const sortLinks = document.querySelectorAll("[data-sort-link]")
+            select.addEventListener("change", (e) => {
+                sortLinks[e.target.value].click()
+            })
+        </script>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5" th:each="item : ${items}">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" style="height: 200px;" th:src="'/photos/'+${item.id}+'.jpg'" alt="..."/>
+                    <!-- Product details-->
+                    <div class="card-body p-4 d-flex">
+                        <div class="text-center d-flex flex-grow-1 flex-column justify-content-between">
+                            <!-- Product name-->
+                            <a class="h5 card-title fw-bolder text-decoration-none text-black" th:href="@{/item/{id}(id=${item.id})}"
+                               th:text="${item.title}"
+                                style="height: calc(var(--bs-body-line-height) * 2)"
+                            />
+                            <!-- Product price-->
+                            <h6 class="d-block card-subtitle text-muted" th:text="${item.cost} + ' &#8381;'"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
 </body>
 </html>
